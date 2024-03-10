@@ -188,5 +188,9 @@ int main() {
     cout << endl;
     cout << "DIJKSTRA : ";
     grid.dijkstra(0, 0);
+
+    
+    int uniquePaths = grid.countUniquePaths();
+    cout << "Number of unique paths from top-left to bottom-right: " << uniquePaths << endl;
     return 0;
 }
