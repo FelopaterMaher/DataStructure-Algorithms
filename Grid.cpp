@@ -120,6 +120,32 @@ public:
         vector<vector<bool>> visited(numRows, vector<bool>(numCols, false));
         dfsTraversal(startRow, startCol, visited);
     }
+
+   int dfsCountPaths(int row, int col, vector<vector<bool>>& visited) {
+        if (row == numRows - 1 && col == numCols - 1) { // Reached bottom-right cell
+            return 1; // Increment path count
+        }
+
+        visited[row][col] = true;
+        int paths = 0;
+
+        for (int i = 0; i < 4; ++i) {
+            int newRow = row + dr[i];
+            int newCol = col + dc[i];
+            if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols &&
+                grid[newRow][newCol] != '#' && !visited[newRow][newCol]) {
+                paths += dfsCountPaths(newRow, newCol, visited); // Recursively explore paths
+            }
+        }
+
+        visited[row][col] = false; // Reset visited flag for backtracking
+        return paths;
+    }
+
+    int countUniquePaths() {
+        vector<vector<bool>> visited(numRows, vector<bool>(numCols, false));
+        return dfsCountPaths(0, 0, visited);
+    }
 };
 
 int main() {
