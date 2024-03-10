@@ -3,56 +3,58 @@
 #include <stack>
 using namespace std;
 
-enum Color { RED, BLACK };
+enum Color { RED, BLACK }; // Enum for defining colors
 
 template <class T>
 class Node {
 public:
-    T data;
-    Color color;
-    Node<T>* left, *right, *parent;
+    T data; // Data stored in the node
+    Color color; // Color of the node in Red-Black Tree
+    Node<T>* left, *right, *parent; // Pointers to left child, right child, and parent
 
-    Node(T data) : data(data), color(RED), left(nullptr), right(nullptr), parent(nullptr) {}
+    Node(T data) : data(data), color(RED), left(nullptr), right(nullptr), parent(nullptr) {} // Constructor for Node
 };
 
 template <class T>
 class RedBlackTree {
 private:
-    Node<T>* root;
+    Node<T>* root; // Root of the Red-Black Tree
 
     // Private helper functions
-    void rotateLeft(Node<T>*&);
-    void rotateRight(Node<T>*&);
-    void fixInsertRBTree(Node<T>*&);
-    void fixDeleteRBTree(Node<T>*&);
-    void inOrderHelper(Node<T>*);
-    void preOrderHelper(Node<T>*);
-    void postOrderHelper(Node<T>*);
-    Node<T>* findSuccessor(Node<T>*);
-    Node<T>* findPredecessor(Node<T>*);
-    Node<T>* searchHelper(Node<T>*, T);
-    bool isSubtree(Node<T>*, Node<T>*);
-    void deleteNode(Node<T>*);
+    void rotateLeft(Node<T>*&); // Left rotation operation
+    void rotateRight(Node<T>*&); // Right rotation operation
+    void fixInsertRBTree(Node<T>*&); // Fix-up operation after insertion
+    void fixDeleteRBTree(Node<T>*&); // Fix-up operation after deletion
+    void inOrderHelper(Node<T>*); // Helper function for in-order traversal
+    void preOrderHelper(Node<T>*); // Helper function for pre-order traversal
+    void postOrderHelper(Node<T>*); // Helper function for post-order traversal
+    Node<T>* findSuccessor(Node<T>*); // Find successor of a node
+    Node<T>* findPredecessor(Node<T>*); // Find predecessor of a node
+    Node<T>* searchHelper(Node<T>*, T); // Helper function for searching a key
+    bool isSubtree(Node<T>*, Node<T>*); // Helper function to check if one tree is subtree of another
+    void deleteNode(Node<T>*); // Delete a node from the tree
+    void transplant(Node<T>*, Node<T>*); // Replace a node with another in the tree
 
 public:
-    RedBlackTree() : root(nullptr) {}
+    RedBlackTree() : root(nullptr) {} // Constructor for Red-Black Tree
 
     // Traversal methods
-    void inOrderTraversal();
-    void preOrderTraversal();
-    void postOrderTraversal();
+    void inOrderTraversal(); // In-order traversal of the tree
+    void preOrderTraversal(); // Pre-order traversal of the tree
+    void postOrderTraversal(); // Post-order traversal of the tree
 
     // Insertion, deletion, and searching methods
-    void insert(T);
-    void remove(T);
-    Node<T>* search(T);
+    void insert(T); // Insert a key into the tree
+    void remove(T); // Remove a key from the tree
+    Node<T>* search(T); // Search for a key in the tree
 
     // Function to detect if one tree is a subtree of another tree
-    bool isSubtreeOf(RedBlackTree<T>&);
+    bool isSubtreeOf(RedBlackTree<T>&); // Check if this tree is subtree of another tree
 };
 
 // Implementation of member functions
 
+// Left rotation operation
 template <class T>
 void RedBlackTree<T>::rotateLeft(Node<T>*& root) {
     // Implementation of left rotation
@@ -71,6 +73,7 @@ void RedBlackTree<T>::rotateLeft(Node<T>*& root) {
     root->parent = newRoot;
 }
 
+// Right rotation operation
 template <class T>
 void RedBlackTree<T>::rotateRight(Node<T>*& root) {
     // Implementation of right rotation
@@ -89,6 +92,7 @@ void RedBlackTree<T>::rotateRight(Node<T>*& root) {
     root->parent = newRoot;
 }
 
+// Fix-up operation after insertion
 template <class T>
 void RedBlackTree<T>::fixInsertRBTree(Node<T>*& node) {
     // Implementation of fix-up after insertion
@@ -130,6 +134,7 @@ void RedBlackTree<T>::fixInsertRBTree(Node<T>*& node) {
     root->color = BLACK;
 }
 
+// Fix-up operation after deletion
 template <class T>
 void RedBlackTree<T>::fixDeleteRBTree(Node<T>*& node) {
     // Implementation of fix-up after deletion
@@ -190,6 +195,7 @@ void RedBlackTree<T>::fixDeleteRBTree(Node<T>*& node) {
         node->color = BLACK;
 }
 
+// Helper function for in-order traversal
 template <class T>
 void RedBlackTree<T>::inOrderHelper(Node<T>* node) {
     if (node == nullptr)
@@ -199,6 +205,7 @@ void RedBlackTree<T>::inOrderHelper(Node<T>* node) {
     inOrderHelper(node->right);
 }
 
+// Helper function for pre-order traversal
 template <class T>
 void RedBlackTree<T>::preOrderHelper(Node<T>* node) {
     if (node == nullptr)
@@ -208,6 +215,7 @@ void RedBlackTree<T>::preOrderHelper(Node<T>* node) {
     preOrderHelper(node->right);
 }
 
+// Helper function for post-order traversal
 template <class T>
 void RedBlackTree<T>::postOrderHelper(Node<T>* node) {
     if (node == nullptr)
@@ -217,6 +225,7 @@ void RedBlackTree<T>::postOrderHelper(Node<T>* node) {
     cout << node->data << " ";
 }
 
+// Find successor of a node
 template <class T>
 Node<T>* RedBlackTree<T>::findSuccessor(Node<T>* node) {
     if (node == nullptr)
@@ -235,6 +244,7 @@ Node<T>* RedBlackTree<T>::findSuccessor(Node<T>* node) {
     return parent;
 }
 
+// Find predecessor of a node
 template <class T>
 Node<T>* RedBlackTree<T>::findPredecessor(Node<T>* node) {
     if (node == nullptr)
@@ -253,6 +263,7 @@ Node<T>* RedBlackTree<T>::findPredecessor(Node<T>* node) {
     return parent;
 }
 
+// Helper function for searching a key
 template <class T>
 Node<T>* RedBlackTree<T>::searchHelper(Node<T>* root, T key) {
     if (root == nullptr || root->data == key)
@@ -262,21 +273,25 @@ Node<T>* RedBlackTree<T>::searchHelper(Node<T>* root, T key) {
     return searchHelper(root->right, key);
 }
 
+// In-order traversal of the tree
 template <class T>
 void RedBlackTree<T>::inOrderTraversal() {
     inOrderHelper(root);
 }
 
+// Pre-order traversal of the tree
 template <class T>
 void RedBlackTree<T>::preOrderTraversal() {
     preOrderHelper(root);
 }
 
+// Post-order traversal of the tree
 template <class T>
 void RedBlackTree<T>::postOrderTraversal() {
     postOrderHelper(root);
 }
 
+// Insert a key into the tree
 template <class T>
 void RedBlackTree<T>::insert(T key) {
     Node<T>* newNode = new Node<T>(key);
@@ -299,6 +314,7 @@ void RedBlackTree<T>::insert(T key) {
     fixInsertRBTree(newNode);
 }
 
+// Delete a node from the tree
 template <class T>
 void RedBlackTree<T>::deleteNode(Node<T>* node) {
     if (node == nullptr)
@@ -349,6 +365,7 @@ void RedBlackTree<T>::deleteNode(Node<T>* node) {
     delete node;
 }
 
+// Replace a node with another in the tree
 template <class T>
 void RedBlackTree<T>::transplant(Node<T>* u, Node<T>* v) {
     if (u->parent == nullptr)
@@ -361,17 +378,20 @@ void RedBlackTree<T>::transplant(Node<T>* u, Node<T>* v) {
         v->parent = u->parent;
 }
 
+// Remove a key from the tree
 template <class T>
 void RedBlackTree<T>::remove(T key) {
     Node<T>* node = search(key);
     deleteNode(node);
 }
 
+// Search for a key in the tree
 template <class T>
 Node<T>* RedBlackTree<T>::search(T key) {
     return searchHelper(root, key);
 }
 
+// Helper function to check if one tree is subtree of another
 template <class T>
 bool RedBlackTree<T>::isSubtree(Node<T>* root1, Node<T>* root2) {
     if (root2 == nullptr)
@@ -384,6 +404,7 @@ bool RedBlackTree<T>::isSubtree(Node<T>* root1, Node<T>* root2) {
     return isSubtree(root1->left, root2) || isSubtree(root1->right, root2);
 }
 
+// Check if this tree is subtree of another tree
 template <class T>
 bool RedBlackTree<T>::isSubtreeOf(RedBlackTree<T>& otherTree) {
     return isSubtree(root, otherTree.root);
