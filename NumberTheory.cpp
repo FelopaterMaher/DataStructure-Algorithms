@@ -52,4 +52,27 @@ void Sieve(ll n)
         }
     }
 }
- 
+
+
+// SPF algorithm O(n*log(log(n)))
+ll spf[N];
+void SPF()
+{
+    for(int i=1; i<N; i++)
+    {
+        spf[i]=i;
+    }
+    for(int i=2; i*i<N; i++)
+    {
+        if(spf[i]==i)
+        {
+            for(int k=i*i; k<N; k+=i)
+            {
+                if(spf[k]==k)
+                {
+                    spf[k]=i;
+                }
+            }
+        }
+    }
+}
