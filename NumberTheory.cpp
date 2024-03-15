@@ -34,3 +34,22 @@ bool isPrime(ll a)
     return true;
 }
  
+
+// Sieve algorithm O(n*log(log(n)))
+bool prime[N];
+void Sieve(ll n)
+{
+    memset(prime,true,sizeof(prime));
+    for(ll p=2; p*p<=n; p++)
+    {
+        if(prime[p])
+        {
+            // i = p*p for optimization 
+            for(ll i=p*p; i<=n; i+=p)
+            {
+                prime[i]=false;
+            }
+        }
+    }
+}
+ 
