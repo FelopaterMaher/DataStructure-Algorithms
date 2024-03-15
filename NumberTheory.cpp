@@ -35,7 +35,7 @@ bool isPrime(ll a)
 }
  
 
-// Sieve algorithm O(n*log(log(n)))
+// Sieve algorithm O(n*log(log(n))) => Harnonic Series
 bool prime[N];
 void Sieve(ll n)
 {
